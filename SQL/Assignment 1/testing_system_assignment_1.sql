@@ -12,7 +12,7 @@ CREATE TABLE `position` (
 );
 
 CREATE TABLE `account` (
-	account_id			VARCHAR(20),
+	account_id			INT,
     email				VARCHAR(50),
     username			VARCHAR(20),
     fullname			VARCHAR(20),
@@ -30,7 +30,7 @@ CREATE TABLE `group` (
 
 CREATE TABLE group_account (
 	group_id			INT,
-    account_id			VARCHAR(20),
+    account_id			INT,
     join_date			DATE 
 );
 
