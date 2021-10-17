@@ -17,5 +17,3 @@ CREATE TABLE trainee (
     evaluation_notes	VARCHAR(500)
 );
 
--- question 2
-ALTER TABLE Trainee ADD COLUMN vti_account SMALLINT UNSIGNED UNIQUE NOT NULL;
