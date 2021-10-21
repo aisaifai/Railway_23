@@ -42,8 +42,8 @@ CREATE TABLE `account`(
     department_id	TINYINT NOT NULL,
     position_id		TINYINT NOT NULL,
     create_date		DATE,
-    FOREIGN KEY (department_id) REFERENCES department(department_id),
-	FOREIGN KEY (position_id) REFERENCES `position`(position_id)
+    FOREIGN KEY (department_id) REFERENCES department(department_id) ON DELETE CASCADE ON UPDATE CASCADE,
+	FOREIGN KEY (position_id) REFERENCES `position`(position_id) ON DELETE CASCADE ON UPDATE CASCADE
 );
 -- Bảng Account
 INSERT INTO `Account`(email, user_name, full_name, department_id, position_id, create_date)
@@ -67,7 +67,7 @@ CREATE TABLE `group`(
     group_name 		VARCHAR(30) CHAR SET utf8mb4 UNIQUE NOT NULL,
     creator_id		SMALLINT NOT NULL,
     create_date		DATE,
-    FOREIGN KEY (creator_id) REFERENCES `account`(account_id)
+    FOREIGN KEY (creator_id) REFERENCES `account`(account_id) ON DELETE CASCADE ON UPDATE CASCADE
 );
 -- Bảng Group
 INSERT INTO `group`(group_name, creator_id, create_date)
@@ -89,8 +89,8 @@ CREATE TABLE group_account(
     account_id		SMALLINT NOT NULL,
     join_date		DATE,
     PRIMARY KEY (group_id, account_id),
-    FOREIGN KEY (group_id) REFERENCES `group`(group_id),
-    FOREIGN KEY (account_id) REFERENCES `account`(account_id)
+    FOREIGN KEY (group_id) REFERENCES `group`(group_id) ON DELETE CASCADE ON UPDATE CASCADE,
+    FOREIGN KEY (account_id) REFERENCES `account`(account_id) ON DELETE CASCADE ON UPDATE CASCADE
 );
 -- Bảng Group Account
 INSERT INTO group_account
@@ -144,9 +144,9 @@ CREATE TABLE question(
     type_id			TINYINT NOT NULL,
     creator_id		SMALLINT NOT NULL,
     create_date		DATE,
-    FOREIGN KEY (category_id) REFERENCES `category_question`(category_id),
-    FOREIGN KEY (type_id) REFERENCES `type_question`(type_id),
-    FOREIGN KEY (creator_id) REFERENCES `account`(account_id)
+    FOREIGN KEY (category_id) REFERENCES `category_question`(category_id) ON DELETE CASCADE ON UPDATE CASCADE,
+    FOREIGN KEY (type_id) REFERENCES `type_question`(type_id) ON DELETE CASCADE ON UPDATE CASCADE,
+    FOREIGN KEY (creator_id) REFERENCES `account`(account_id) ON DELETE CASCADE ON UPDATE CASCADE
 );
 -- Bảng Question
 INSERT INTO question(content, category_id, type_id, creator_id, create_date)
@@ -168,7 +168,7 @@ CREATE TABLE answer(
     content			VARCHAR(100) CHAR SET utf8mb4 NOT NULL,
     question_id		TINYINT NOT NULL,
     is_correct		BOOLEAN,
-    FOREIGN KEY (question_id) REFERENCES `question`(question_id)
+    FOREIGN KEY (question_id) REFERENCES `question`(question_id) ON DELETE CASCADE ON UPDATE CASCADE
 );
 -- Bảng Answer
 INSERT INTO answer(content, question_id, is_correct)
@@ -198,8 +198,8 @@ CREATE TABLE exam(
     duration		TINYINT NOT NULL,
     creator_id 		SMALLINT NOT NULL,
     create_date		DATE,
-	FOREIGN KEY (category_id) REFERENCES `category_question`(category_id),
-    FOREIGN KEY (creator_id) REFERENCES `account`(account_id)
+	FOREIGN KEY (category_id) REFERENCES `category_question`(category_id) ON DELETE CASCADE ON UPDATE CASCADE,
+    FOREIGN KEY (creator_id) REFERENCES `account`(account_id) ON DELETE CASCADE ON UPDATE CASCADE
 );
 -- Bảng Exam
 INSERT INTO exam(`code`, title, category_id, duration, creator_id, create_date)
@@ -219,8 +219,9 @@ DROP TABLE IF EXISTS exam_question;
 CREATE TABLE exam_question(
 	exam_id			TINYINT NOT NULL,
     question_id		TINYINT NOT NULL,
-    FOREIGN KEY (exam_id) REFERENCES `exam`(exam_id),
-    FOREIGN KEY (question_id) REFERENCES `question`(question_id)
+    PRIMARY KEY (exam_id, question_id),
+    FOREIGN KEY (exam_id) REFERENCES `exam`(exam_id) ON DELETE CASCADE ON UPDATE CASCADE,
+    FOREIGN KEY (question_id) REFERENCES `question`(question_id) ON DELETE CASCADE ON UPDATE CASCADE
 );
 -- Bảng Exam Question
 INSERT INTO exam_question(exam_id, question_id)
@@ -285,9 +286,12 @@ WHERE full_name LIKE 'D%o' ;
 DELETE FROM exam 
 WHERE create_date < '2019-12-20';
 
+SELECT * FROM exam;
+
 -- Question 13: Xóa tất cả các question có nội dung bắt đầu bằng từ "câu hỏi"
 DELETE FROM `question`
 WHERE content LIKE 'Câu hỏi%';
+SELECT * FROM `question`;
 
 -- Question 14: Update thông tin của account có id = 5 thành tên "Nguyễn Bá Lộc" và email thành loc.nguyenba@vti.com.vn
 UPDATE `account`

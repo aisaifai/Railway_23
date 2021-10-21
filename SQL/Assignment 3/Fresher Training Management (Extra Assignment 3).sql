@@ -42,7 +42,7 @@ GROUP BY MONTH(birth_date);
 -- Question 3: Query the trainee who has the longest name, showing his/her age along with his/her basic information (as defined in the table)
 SELECT * FROM trainee 
 WHERE LENGTH(full_name) =
-	(SELECT MAX(LENGTH(full_name)) FROM `trainee`);
+	(SELECT MAX(LENGTH(full_name)) FROM trainee);
     
 -- Question 4: Query all the ET-passed trainees. One trainee is considered as ET-passed
 -- when he/she has the entry test points satisfied below criteria:
@@ -51,12 +51,13 @@ WHERE LENGTH(full_name) =
 --  ET_Gmath>=8
 --  ET_English>=18
 SELECT * FROM trainee
-WHERE et_iq + et_gmath >=20 AND et_iq >= 8 AND et_gmath >= 8 AND et_english >= 18;
+WHERE (et_iq + et_gmath) >=20 AND et_iq >= 8 AND et_gmath >= 8 AND et_english >= 18;
 
 -- Question 5: delete information of trainee who has TraineeID = 3
 DELETE FROM trainee WHERE trainee_id = 3; 
+SELECT * FROM trainee;
 
 -- Question 6: trainee who has TraineeID = 5 move "2" class. Let update information into database
 UPDATE trainee 
-SET training_class = 'VTI002' 
+SET training_class = '2' 
 WHERE trainee_id = 5;
