@@ -285,6 +285,21 @@ WHERE full_name LIKE 'D%o' ;
 DELETE FROM exam 
 WHERE create_date < '2019-12-20';
 
+-- Question 13: Xóa tất cả các question có nội dung bắt đầu bằng từ "câu hỏi"
+DELETE FROM `question`
+WHERE content LIKE 'Câu hỏi%';
+
+-- Question 14: Update thông tin của account có id = 5 thành tên "Nguyễn Bá Lộc" và email thành loc.nguyenba@vti.com.vn
+UPDATE `account`
+SET full_name = 'Nguyễn Bá Lộc',
+email = 'loc.nguyenba@vti.com.vn'
+WHERE account_id = 5;
+
+-- Question 15: update account có id = 5 sẽ thuộc group có id = 4
+UPDATE group_account SET account_id = 5
+WHERE group_id = 4;
+
+
 
 
     

@@ -9,7 +9,7 @@ CREATE TABLE trainee (
 	trainee_id			TINYINT AUTO_INCREMENT PRIMARY KEY,
     full_name			VARCHAR(30) CHAR SET utf8mb4 NOT NULL,
     birth_date			DATE,
-    gender				ENUM('male', 'female', 'unknown'),
+    gender				ENUM('male', 'female', 'unknown') NOT NULL,
     et_iq				TINYINT CHECK (et_iq >= 0 AND et_iq <= 20),
 	et_gmath			TINYINT CHECK (et_gmath >=0 AND et_gmath <= 20),
 	et_english			TINYINT CHECK (et_english >= 0 AND et_english <= 50),
@@ -19,4 +19,8 @@ CREATE TABLE trainee (
 
 -- question 2
 ALTER TABLE trainee ADD COLUMN vti_account VARCHAR(20) NOT NULL UNIQUE;
+
+-- Extra 3
+-- Question 1: Thêm data
+
 
